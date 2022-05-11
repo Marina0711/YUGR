@@ -10,6 +10,7 @@ import { LightButtonComponent } from '../components/LightButtonComponent';
 import { TextInputComponent } from '../components/TextInputComponent';
 
 import { Colors } from '../assets/Colors';
+import { Strings } from '../assets/Strings';
 
 type AuthFormType = {
     email: string,
@@ -37,8 +38,8 @@ export const AuthScreen = () => {
             >
                 <HeaderLogoComponent />
                 <>
-                    <Text style={styles.welcome}>Добро пожаловать!</Text>
-                    <Text style={styles.title}>Войдите в профиль</Text>
+                    <Text style={styles.welcome}>{Strings.authScreen.welcome}</Text>
+                    <Text style={styles.title}>{Strings.authScreen.loginToProfile}</Text>
                 </>
                 <Formik
                     initialValues={initialValues}
@@ -46,24 +47,32 @@ export const AuthScreen = () => {
                 >
                     {({ handleChange, handleBlur, handleSubmit, values }) => (
                         <>
-                            <View style={{ marginBottom: 40 }}>
+                            <View style={styles.inputs}>
                                 <TextInputComponent
                                     value={values.email}
-                                    label={'Email'}
+                                    label={Strings.authScreen.email}
                                     onChangeText={handleChange('email')}
                                     onBlur={handleBlur('email')}
                                 />
                                 <TextInputComponent
                                     value={values.password}
-                                    label={'Пароль'}
+                                    label={Strings.authScreen.password}
                                     isPassword={isShowPassword}
                                     onClickEye={onClickEye}
                                     onChangeText={handleChange('password')}
                                     onBlur={handleBlur('password')}
                                 />
                             </View>
-                            <DarkButtonComponent title={'Войти'} style={styles.buttonsStyle} onPress={handleSubmit} />
-                            <LightButtonComponent title={'Зарегистрироваться'} style={styles.buttonsStyle} onPress={handleSubmit} />
+                            <DarkButtonComponent
+                                title={Strings.authScreen.logIn}
+                                style={styles.buttonsStyle}
+                                onPress={handleSubmit}
+                            />
+                            <LightButtonComponent
+                                title={Strings.authScreen.register}
+                                style={styles.buttonsStyle}
+                                onPress={handleSubmit}
+                            />
                         </>
                     )}
                 </Formik>
@@ -80,8 +89,6 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         marginHorizontal: 30,
-        // justifyContent: 'space-around'
-        // backgroundColor: 'yellow'
     },
     welcome: {
         fontSize: 30,
@@ -98,6 +105,9 @@ const styles = StyleSheet.create({
         marginBottom: 25,
         textAlign: 'center',
         color: Colors.verifiedBlack
+    },
+    inputs: {
+        marginBottom: 40
     },
     buttonsStyle: {
         marginTop: 30
