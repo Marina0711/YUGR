@@ -90,12 +90,7 @@ class ProductController {
 
             if (parsedProduct.rateInfo.length){
                 newProduct.rateInfo = {
-                    isRated: parsedProduct.rateInfo.reduce((total, item) => {
-                        if (item.user === Number(user)){
-                            total = true
-                        }
-                        return total
-                    }, false),
+                    isRated: parsedProduct.rateInfo.some(item => item.user === Number(user)),
                     rate: calculateRating(product.rateInfo.map(item=> item.rate))
                 }
             } else {
