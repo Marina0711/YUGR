@@ -5,6 +5,8 @@ export const Strings = {
         email: 'Электронная почта',
         password: 'Пароль',
         logIn: 'Войти',
-        register: 'Зарегистрироваться'
+        register: 'Зарегистрироваться',
+        confirmPassword: 'Подтвердите пароль',
+        alreadyHaveAccount: 'Уже есть аккаунт?'
     }
 };
