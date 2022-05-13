@@ -1,5 +1,5 @@
 const Rating = require('../models/rating')
-const ApiError = require('../error/ApiError');
+const ApiError = require('../error/apiError');
 const calculateRating = require('../helpers/calculateRating')
 
 class RatingController {

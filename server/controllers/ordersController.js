@@ -1,5 +1,5 @@
 const Order = require('../models/order')
-const ApiError = require('../error/ApiError');
+const ApiError = require('../error/apiError');
 
 //todo implement work with orders
 class OrderController {

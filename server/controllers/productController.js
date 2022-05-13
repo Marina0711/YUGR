@@ -3,7 +3,7 @@ const path = require('path')
 const Product = require('../models/product')
 const ProductInfo = require('../models/productInfo')
 const Rating = require('../models/rating')
-const ApiError = require('../error/ApiError')
+const ApiError = require('../error/apiError')
 const calculateRating = require('../helpers/calculateRating')
 
 const postProductInfo = async (title, description, productId) => {
