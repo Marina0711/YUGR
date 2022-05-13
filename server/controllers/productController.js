@@ -4,6 +4,7 @@ const Product = require('../models/product')
 const ProductInfo = require('../models/productInfo')
 const Rating = require('../models/rating')
 const ApiError = require('../error/ApiError')
+const calculateRating = require('../helpers/calculateRating')
 
 const postProductInfo = async (title, description, productId) => {
     await ProductInfo.create({
@@ -11,6 +12,20 @@ const postProductInfo = async (title, description, productId) => {
         description,
         productId
     })
+}
+
+const getRateData = (ratings, user) => {
+    if (ratings.length) {
+        return {
+            isRated: ratings.some(item => item.user === +user),
+            rate: calculateRating(ratings.map(item=> item.rate))
+        }
+    } else {
+        return {
+            isRated: false,
+            rate: 0
+        }
+    }
 }
 
 class ProductController {
@@ -42,13 +57,12 @@ class ProductController {
 
     async getAll(req, res, next) {
         try {
-            let { categoryId, limit = 10 , page = 1 } = req.body
-            let offset = page * limit - limit
-            let products
+            const { categoryId, limit = 10 , page = 1 } = req.body
+            const offset = page * limit - limit
 
             const query = categoryId ? {where: {categoryId}, limit, offset } : { limit, offset };
 
-            products = await Product.findAndCountAll(query)
+            const products = await Product.findAndCountAll(query)
 
             return res.json(products)
         } catch (e) {
@@ -56,7 +70,6 @@ class ProductController {
         }
     }
 
-    //todo come up with a good way to display the rating
     async getOne(req, res, next) {
         try {
             const { id } = req.params
@@ -69,38 +82,11 @@ class ProductController {
                 }
             )
 
-            const calculateRating = (ratings) => {
-                let rating = 0
-                if (ratings) {
-                    ratings.forEach(i => {
-                        rating += i
-                    })
-                    rating = rating / ratings.length
-                }
-
-                return rating
-            }
-
-            const parsedProduct = JSON.parse(JSON.stringify(product))
-            const newProduct = {...parsedProduct}
-
-            if (!parsedProduct) {
+            if (!product) {
                 return next(ApiError.notFound('Нет такой трубы, дружок!)'))
             }
 
-            if (parsedProduct.rateInfo.length){
-                newProduct.rateInfo = {
-                    isRated: parsedProduct.rateInfo.some(item => item.user === Number(user)),
-                    rate: calculateRating(product.rateInfo.map(item=> item.rate))
-                }
-            } else {
-                newProduct.rateInfo = {
-                    isRated: false,
-                    rate: 0
-                }
-            }
-
-            return res.json(newProduct)
+            return res.json({...product.dataValues, rateInfo: getRateData(product.rateInfo, user)})
         } catch (e) {
             next(ApiError.badRequest((e.message)))
         }

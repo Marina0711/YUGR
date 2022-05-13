@@ -1,16 +1,6 @@
 const Rating = require('../models/rating')
 const ApiError = require('../error/ApiError');
-
-const calculateRating = (ratings) => {
-    let rating = 0
-    if (ratings) {
-        ratings.forEach(i => {
-            rating += i.rate
-        })
-        rating /= ratings.length
-    }
-    return rating
-}
+const calculateRating = require('../helpers/calculateRating')
 
 class RatingController {
     async create(req, res, next) {
@@ -25,7 +15,7 @@ class RatingController {
 
             const ratings = await Rating.findAll({where: {productId}})
 
-            let rating = calculateRating(ratings)
+            const rating = calculateRating(ratings)
             return res.json(rating)
         } catch (e) {
             next(ApiError.badRequest((e.message)))
@@ -38,7 +28,7 @@ class RatingController {
 
             const ratings = await Rating.findAll({where: {productId}})
 
-            let rating = calculateRating(ratings)
+            const rating = calculateRating(ratings)
             return res.json(rating)
         } catch (e) {
             next(ApiError.badRequest((e.message)))
