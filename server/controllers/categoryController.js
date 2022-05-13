@@ -1,5 +1,5 @@
 const Category = require('../models/category')
-const ApiError = require('../error/ApiError')
+const ApiError = require('../error/apiError')
 
 class CategoryController {
     async create(req, res, next) {

@@ -1,9 +1,10 @@
 const Router = require('express')
 const router = new Router()
 const productController = require('../controllers/productController')
-const authMiddleware = require('../middleware/AuthMiddleware')
+const authMiddleware = require('../middleware/authMiddleware')
+const roleMiddleware = require('../middleware/roleMiddleware')
 
-router.post('/', authMiddleware, productController.create)
+router.post('/', authMiddleware, roleMiddleware('ADMIN'), productController.create)
 router.get('/', authMiddleware, productController.getAll)
 router.get('/:id', authMiddleware, productController.getOne)
 
