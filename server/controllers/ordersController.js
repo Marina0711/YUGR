@@ -1,4 +1,4 @@
-const Order = require('../models/order')
+const { Order } = require('../models/index')
 const ApiError = require('../error/apiError');
 
 //todo implement work with orders

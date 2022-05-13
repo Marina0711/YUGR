@@ -1,4 +1,4 @@
-const Category = require('../models/category')
+const { Category } = require('../models/index')
 const ApiError = require('../error/apiError')
 
 class CategoryController {
