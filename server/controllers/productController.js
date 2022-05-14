@@ -1,8 +1,4 @@
-const uuid = require('uuid')
-const path = require('path')
-const Product = require('../models/product')
-const ProductInfo = require('../models/productInfo')
-const Rating = require('../models/rating')
+const { Product, ProductInfo, Rating } = require('../models/index')
 const ApiError = require('../error/apiError')
 const calculateRating = require('../helpers/calculateRating')
 
@@ -32,11 +28,9 @@ class ProductController {
     async create(req, res, next) {
         try {
             const {name, price, categoryId, info} = req.body
-            const {img} = req.files
-            let fileName = uuid.v4() + '.jpg'
-            img.mv(path.resolve(__dirname, '..', 'static', fileName))
+            const img = req.file.originalname
 
-            const product = await Product.create({ name, price, categoryId, img: fileName })
+            const product = await Product.create({ name, price, categoryId, img })
 
             if (info) {
                 const infoTest = JSON.parse(info)

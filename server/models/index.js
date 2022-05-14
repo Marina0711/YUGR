@@ -19,3 +19,5 @@ ProductInfo.belongsTo(Product)
 
 User.hasMany(Order)
 Order.belongsTo(User)
+
+module.exports = { Product, Order, ProductInfo, Category, Rating, User }
