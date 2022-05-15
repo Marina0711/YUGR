@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 
@@ -6,14 +6,14 @@ import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 
 import { DarkButtonComponent } from '../components/DarkButtonComponent';
+import { ErrorText } from '../components/ErrorText';
 import { LightButtonComponent } from '../components/LightButtonComponent';
 import { TextInputComponent } from '../components/TextInputComponent';
 
-import { Context } from '../../App';
 import { Strings } from '../assets/Strings';
+import { loginSchema } from '../constants/authValidationConstant';
 import { AuthScreenHOC } from '../HOCs/AuthScreenHOC';
 import { AuthScreenNamesEnum, AutNativeStackNavigator } from '../navigation/AuthNavigator';
-
 type LoginScreenNavigationProp = NativeStackNavigationProp<AutNativeStackNavigator, AuthScreenNamesEnum.LoginScreen>
 
 type AuthFormType = {
@@ -28,16 +28,18 @@ const initialValues: AuthFormType = {
 
 export const LoginScreen = () => {
     const navigation = useNavigation<LoginScreenNavigationProp>();
-    const { user } = useContext(Context);
     const [isShowPassword, setIsShowPassword] = useState(true);
 
     return (
         <AuthScreenHOC isAuth >
             <Formik
                 initialValues={initialValues}
+                validationSchema={loginSchema}
+                validateOnBlur={false}
+                validateOnChange={false}
                 onSubmit={values => console.log(values)}
             >
-                {({ handleChange, handleBlur, handleSubmit, values }) => (
+                {({ handleChange, errors,resetForm , handleBlur, handleSubmit, values }) => (
                     <>
                         <View style={styles.inputs}>
                             <TextInputComponent
@@ -46,6 +48,7 @@ export const LoginScreen = () => {
                                 onChangeText={handleChange('email')}
                                 onBlur={handleBlur('email')}
                             />
+                            <ErrorText text={errors.email ?? ''} />
                             <TextInputComponent
                                 value={values.password}
                                 label={Strings.authScreen.password}
@@ -54,16 +57,20 @@ export const LoginScreen = () => {
                                 onChangeText={handleChange('password')}
                                 onBlur={handleBlur('password')}
                             />
+                            <ErrorText text={errors.password ?? ''} />
                         </View>
                         <DarkButtonComponent
                             title={Strings.authScreen.logIn}
                             style={styles.buttonsStyle}
-                            onPress={() => user.setIsAuth(true)}
+                            onPress={() => handleSubmit()}
                         />
                         <LightButtonComponent
                             title={Strings.authScreen.register}
                             style={styles.buttonsStyle}
-                            onPress={() => navigation.navigate(AuthScreenNamesEnum.RegistrationScreen)}
+                            onPress={() => {
+                                navigation.navigate(AuthScreenNamesEnum.RegistrationScreen);
+                                resetForm();
+                            }}
                         />
                     </>
                 )}

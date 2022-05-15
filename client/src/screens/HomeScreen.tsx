@@ -1,5 +1,5 @@
-import React from 'react'
-import {Platform, SafeAreaView, StatusBar, StyleSheet, Text} from "react-native";
+import React from 'react';
+import { Platform, SafeAreaView, StatusBar, StyleSheet, Text } from 'react-native';
 
 export const HomeScreen = () => {
     return (
@@ -8,13 +8,12 @@ export const HomeScreen = () => {
                 Hello
             </Text>
         </SafeAreaView>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        // backgroundColor: COLORS.white_light,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
-},
+    },
 });

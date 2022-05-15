@@ -3,5 +3,6 @@ export const Colors = {
     basaltGrey: '#999999',
     tin: '#909090',
     christmasSilver: '#E0E0E0',
-    white: '#FFFFFF'
+    white: '#FFFFFF',
+    pleasantPomegranate: '#CC3300',
 };
