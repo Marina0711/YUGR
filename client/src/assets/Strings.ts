@@ -8,5 +8,12 @@ export const Strings = {
         register: 'Зарегистрироваться',
         confirmPassword: 'Подтвердите пароль',
         alreadyHaveAccount: 'Уже есть аккаунт?'
+    },
+    authValidation: {
+        PSWDDoNotMatch: 'Пароли не совпадают',
+        limitExceeded: 'Превышен лимит символов',
+        required: 'Обязательное поле',
+        incorrectEmail: 'Некорректная почта',
+        passwordIsShort: 'Пароль слишком короткий'
     }
 };
