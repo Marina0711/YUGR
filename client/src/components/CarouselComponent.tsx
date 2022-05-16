@@ -1,0 +1,102 @@
+import React, { useRef, useState } from 'react';
+import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import Carousel from 'react-native-snap-carousel';
+
+import { Colors } from '../assets/Colors';
+
+type CategoryType = {
+    id: number,
+    name: string
+};
+
+export const MOCK: CategoryType[] = [
+    {
+        id: 1,
+        name: 'Труба',
+    },
+    {
+        id: 2,
+        name: 'Еще одна',
+    },
+    {
+        id: 3,
+        name: 'Ого, труба',
+    },
+    {
+        id: 4,
+        name: 'И снова труба',
+    },
+];
+
+const SCREEN_WIDTH = Dimensions.get('window').width - 40;
+const SLIDER_ITEM_WIDTH = 120;
+
+type RenderSliderItemType = {
+    item: CategoryType,
+    index: number
+}
+
+export const CarouselComponent = () => {
+    const [activeIndex, setActiveIndex] = useState<number>(1);
+    const carouselRef = useRef<Carousel<CategoryType>>(null);
+
+    const onPress = (index: number) => {
+        setActiveIndex(index);
+        carouselRef?.current?.snapToItem(index);
+    };
+
+    const renderSliderItem = ({ item, index }: RenderSliderItemType) => {
+        const isActive = activeIndex === index;
+
+        return (
+            <TouchableOpacity
+                style={[styles.containerTab, isActive ? styles.activeTab : styles.inactiveTab]}
+                onPress={() => onPress(index)}
+            >
+                <Text style={isActive ? styles.activeText : styles.inactiveText} >{item.name}</Text>
+            </TouchableOpacity>
+        );
+    };
+
+    return (
+        <Carousel
+            ref={carouselRef}
+            activeSlideAlignment={'start'}
+            data={MOCK}
+            renderItem={renderSliderItem}
+            sliderWidth={SCREEN_WIDTH}
+            itemWidth={SLIDER_ITEM_WIDTH}
+            contentContainerCustomStyle={styles.carousel}
+            inactiveSlideOpacity={1}
+            inactiveSlideScale={1}
+        />
+    );
+};
+
+const styles = StyleSheet.create({
+    carousel: {
+        marginVertical: 10,
+    },
+    containerTab: {
+        borderRadius: 8,
+        alignItems: 'center',
+        paddingVertical: 10,
+        marginRight: 8
+    },
+    activeTab: {
+        backgroundColor: Colors.verifiedBlack,
+    },
+    inactiveTab: {
+        backgroundColor: Colors.pixelWhite
+    },
+    activeText: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: Colors.white,
+    },
+    inactiveText: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: Colors.tin,
+    }
+});

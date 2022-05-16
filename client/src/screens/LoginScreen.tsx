@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 
 import { DarkButtonComponent } from '../components/DarkButtonComponent';
-import { ErrorText } from '../components/ErrorText';
+import { ErrorTextComponent } from '../components/ErrorTextComponent';
 import { LightButtonComponent } from '../components/LightButtonComponent';
 import { TextInputComponent } from '../components/TextInputComponent';
 
@@ -48,7 +48,7 @@ export const LoginScreen = () => {
                                 onChangeText={handleChange('email')}
                                 onBlur={handleBlur('email')}
                             />
-                            <ErrorText text={errors.email ?? ''} />
+                            <ErrorTextComponent text={errors.email ?? ''} />
                             <TextInputComponent
                                 value={values.password}
                                 label={Strings.authScreen.password}
@@ -57,7 +57,7 @@ export const LoginScreen = () => {
                                 onChangeText={handleChange('password')}
                                 onBlur={handleBlur('password')}
                             />
-                            <ErrorText text={errors.password ?? ''} />
+                            <ErrorTextComponent text={errors.password ?? ''} />
                         </View>
                         <DarkButtonComponent
                             title={Strings.authScreen.logIn}

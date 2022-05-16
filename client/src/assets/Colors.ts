@@ -5,4 +5,5 @@ export const Colors = {
     christmasSilver: '#E0E0E0',
     white: '#FFFFFF',
     pleasantPomegranate: '#CC3300',
+    pixelWhite: '#DBDBDB'
 };

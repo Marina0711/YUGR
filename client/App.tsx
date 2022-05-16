@@ -1,27 +1,25 @@
-import React, {createContext} from 'react';
+import React from 'react';
 import {
-  StatusBar,
-  useColorScheme,
+    StatusBar,
+    StyleSheet,
+    View,
 } from 'react-native';
 
-import {RootNavigator} from "./src/navigation/RootNavigator";
-import UserStore from "./src/store/UserStore";
-import ProductStore from "./src/store/ProductStore";
-
-export const Context = createContext<any | null>(null)
+import { RootNavigator } from './src/navigation/RootNavigator';
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  return (
-      <Context.Provider value={{
-          user: new UserStore(),
-          product: new ProductStore()
-      }}>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-          <RootNavigator />
-      </Context.Provider>
-  );
+    return (
+        <View style={styles.container}>
+            <StatusBar barStyle={'dark-content'} />
+            <RootNavigator />
+        </View>
+    );
 };
 
 export default App;
+
+const styles = StyleSheet.create({
+    container:{
+        flex: 1,
+    },
+});
