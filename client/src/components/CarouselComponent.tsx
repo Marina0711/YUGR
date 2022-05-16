@@ -50,10 +50,20 @@ export const CarouselComponent = () => {
 
         return (
             <TouchableOpacity
-                style={[styles.containerTab, isActive ? styles.activeTab : styles.inactiveTab]}
+                style={{
+                    ...styles.containerTab,
+                    backgroundColor:  isActive ? Colors.verifiedBlack : Colors.pixelWhite
+                }}
                 onPress={() => onPress(index)}
             >
-                <Text style={isActive ? styles.activeText : styles.inactiveText} >{item.name}</Text>
+                <Text
+                    style={{
+                        ...styles.text,
+                        color: isActive ? Colors.white : Colors.tin
+                    }}
+                >
+                    {item.name}
+                </Text>
             </TouchableOpacity>
         );
     };
@@ -83,20 +93,8 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         marginRight: 8
     },
-    activeTab: {
-        backgroundColor: Colors.verifiedBlack,
-    },
-    inactiveTab: {
-        backgroundColor: Colors.pixelWhite
-    },
-    activeText: {
+    text: {
         fontSize: 14,
         fontWeight: '600',
-        color: Colors.white,
-    },
-    inactiveText: {
-        fontSize: 14,
-        fontWeight: '600',
-        color: Colors.tin,
     }
 });
