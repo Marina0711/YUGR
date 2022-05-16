@@ -3,30 +3,7 @@ import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
 import { Colors } from '../assets/Colors';
-
-type CategoryType = {
-    id: number,
-    name: string
-};
-
-export const MOCK: CategoryType[] = [
-    {
-        id: 1,
-        name: 'Труба',
-    },
-    {
-        id: 2,
-        name: 'Еще одна',
-    },
-    {
-        id: 3,
-        name: 'Ого, труба',
-    },
-    {
-        id: 4,
-        name: 'И снова труба',
-    },
-];
+import { CategoryType, productStore } from '../store/ProductStore';
 
 const SCREEN_WIDTH = Dimensions.get('window').width - 40;
 const SLIDER_ITEM_WIDTH = 120;
@@ -72,7 +49,7 @@ export const CarouselComponent = () => {
         <Carousel
             ref={carouselRef}
             activeSlideAlignment={'start'}
-            data={MOCK}
+            data={productStore.categories}
             renderItem={renderSliderItem}
             sliderWidth={SCREEN_WIDTH}
             itemWidth={SLIDER_ITEM_WIDTH}
