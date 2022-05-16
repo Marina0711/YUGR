@@ -7,7 +7,7 @@ type ErrorStringPropsType = {
     text: string
 }
 
-export const ErrorText = (props: ErrorStringPropsType) => {
+export const ErrorTextComponent = (props: ErrorStringPropsType) => {
     const { text } = props;
 
     return(

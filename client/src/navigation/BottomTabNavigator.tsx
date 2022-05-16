@@ -5,18 +5,29 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { Colors } from '../assets/Colors';
+import { BasketScreen } from '../screens/BasketScreen';
 import { HomeScreen } from '../screens/HomeScreen';
+import { UserScreen } from '../screens/UserScreen';
 
 enum ScreenNamesEnum {
     home = 'home',
-    other = 'other',
-    profile = 'profile'
+    basket = 'basket',
+    user = 'user'
 }
 
 const Tab = createBottomTabNavigator();
+const ICON_SIZE = 20;
 
 export const BottomTabNavigator = () => {
     const getTabColor = (focused: boolean) => focused ? Colors.verifiedBlack : Colors.basaltGrey;
+
+    const getOptions = (name: ScreenNamesEnum) => {
+        return {
+            tabBarIcon: ({ focused }: {focused: boolean}) => (
+                <Icon name={name} size={ICON_SIZE} color={getTabColor(focused)} />
+            ),
+        };
+    };
 
     return (
         <NavigationContainer>
@@ -24,29 +35,23 @@ export const BottomTabNavigator = () => {
                 initialRouteName={ScreenNamesEnum.home}
                 screenOptions={{
                     headerShown: false,
-                    tabBarShowLabel: false
+                    tabBarShowLabel: false,
                 }}
             >
                 <Tab.Screen
-                    options={{
-                        tabBarIcon: ({ focused }) => <Icon name={'home'} size={20} color={getTabColor(focused)} />
-                    }}
+                    options={getOptions(ScreenNamesEnum.home)}
                     name={ScreenNamesEnum.home}
                     component={HomeScreen}
                 />
                 <Tab.Screen
-                    options={{
-                        tabBarIcon: ({ focused }) => <Icon name={'basket'} size={20} color={getTabColor(focused)} />
-                    }}
-                    name={ScreenNamesEnum.other}
-                    component={HomeScreen}
+                    options={getOptions(ScreenNamesEnum.basket)}
+                    name={ScreenNamesEnum.basket}
+                    component={BasketScreen}
                 />
                 <Tab.Screen
-                    options={{
-                        tabBarIcon: ({ focused }) => <Icon name={'user'} size={20} color={getTabColor(focused)} />
-                    }}
-                    name={ScreenNamesEnum.profile}
-                    component={HomeScreen}
+                    options={getOptions(ScreenNamesEnum.user)}
+                    name={ScreenNamesEnum.user}
+                    component={UserScreen}
                 />
             </Tab.Navigator>
         </NavigationContainer>

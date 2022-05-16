@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 
 import { DarkButtonComponent } from '../components/DarkButtonComponent';
-import { ErrorText } from '../components/ErrorText';
+import { ErrorTextComponent } from '../components/ErrorTextComponent';
 import { TextInputComponent } from '../components/TextInputComponent';
 
 import { Colors } from '../assets/Colors';
@@ -55,7 +55,7 @@ export const RegistrationScreen = () => {
                                 onChangeText={handleChange('email')}
                                 onBlur={handleBlur('email')}
                             />
-                            <ErrorText text={errors.email ?? ''} />
+                            <ErrorTextComponent text={errors.email ?? ''} />
                             <TextInputComponent
                                 value={values.password}
                                 label={Strings.authScreen.password}
@@ -64,7 +64,7 @@ export const RegistrationScreen = () => {
                                 onChangeText={handleChange('password')}
                                 onBlur={handleBlur('password')}
                             />
-                            <ErrorText text={errors.password ?? ''} />
+                            <ErrorTextComponent text={errors.password ?? ''} />
                             <TextInputComponent
                                 value={values.confirmedPassword}
                                 label={Strings.authScreen.confirmPassword}
@@ -73,7 +73,7 @@ export const RegistrationScreen = () => {
                                 onChangeText={handleChange('confirmedPassword')}
                                 onBlur={handleBlur('confirmedPassword')}
                             />
-                            <ErrorText text={errors.confirmedPassword ?? ''} />
+                            <ErrorTextComponent text={errors.confirmedPassword ?? ''} />
                         </View>
                         <DarkButtonComponent
                             title={Strings.authScreen.register}

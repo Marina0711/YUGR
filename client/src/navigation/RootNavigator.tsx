@@ -1,14 +1,12 @@
-import React, { useContext } from 'react';
+import React  from 'react';
 
 import { observer } from 'mobx-react-lite';
 
-import { Context } from '../../App';
+import { userStore } from '../store/UserStore';
 
 import { AuthNavigator } from './AuthNavigator';
 import { BottomTabNavigator } from './BottomTabNavigator';
 
 export const RootNavigator = observer(() => {
-    const { user } = useContext(Context);
-
-    return user?.isAuth ? <BottomTabNavigator /> : <AuthNavigator />;
+    return userStore.isAuth ? <BottomTabNavigator /> : <AuthNavigator />;
 });
