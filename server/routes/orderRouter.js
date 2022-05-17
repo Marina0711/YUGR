@@ -1,9 +1,8 @@
 const Router = require('express')
 const router = new Router()
-const ordersController = require('../controllers/ordersController')
-const authMiddleware = require('../middleware/authMiddleware')
+const orderController = require('../controllers/orderController')
 
-router.post('/', authMiddleware, ordersController.create)
-router.get('/', authMiddleware, ordersController.getAll)
+router.get('/', orderController.getAll)
+router.patch('/', orderController.create)
 
 module.exports = router

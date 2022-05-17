@@ -17,14 +17,14 @@ class UserController {
                 return next(ApiError.badRequest('Некорректный email или password!'))
             }
 
-            const user = await User.findOne({where: {email}})
+            const user = await User.findOne({ where: { email } })
             if (user) {
                 return next(ApiError.badRequest('Пользователь с таким email уже существует!'))
             }
 
             const hashPassword = await  bcrypt.hash(password, 5)
             const newUser = await User.create({email, role, password: hashPassword})
-            await Order.create({userId: newUser.id})
+            await Order.create({ userId: newUser.id })
             const token = generateJwt(newUser.id, newUser.email, newUser.role)
 
             return res.json({token})
