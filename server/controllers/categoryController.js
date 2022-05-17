@@ -12,6 +12,18 @@ class CategoryController {
         }
     }
 
+    async delete(req, res, next) {
+        try {
+            const { id } = req.params
+
+            const deletedCategory = await Category.destroy({ where: { id }})
+
+            return res.json(deletedCategory)
+        } catch (e) {
+            next(ApiError.badRequest((e.message)))
+        }
+    }
+
     async getAll(req, res, next) {
         try {
             const categories = await Category.findAll()

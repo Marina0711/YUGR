@@ -11,6 +11,7 @@ const upload = multer({storage: multer.diskStorage({
 }).single('img');
 
 router.post('/', authMiddleware, roleMiddleware('ADMIN'), upload, productController.create)
+router.delete('/:id', authMiddleware, roleMiddleware('ADMIN'), productController.delete)
 router.get('/', authMiddleware, productController.getAll)
 router.get('/:id', authMiddleware, productController.getOne)
 
