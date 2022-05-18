@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../assets/Colors';
 
 type HeaderComponentPropsType = {
-    title: string,
+    title?: string,
     isBackButton?: boolean
 }
 
@@ -17,16 +17,17 @@ export const HeaderComponent = (props: HeaderComponentPropsType) => {
 
     return (
         <View style={styles.container}>
-            <Pressable style={styles.block}>
+            <View style={styles.block}>
                 {isBackButton && (
-                    <Icon
-                        name={'arrow-left'}
-                        size={25}
-                        color={Colors.verifiedBlack}
-                        onPress={navigation.goBack}
-                    />
+                    <Pressable onPress={navigation.goBack}>
+                        <Icon
+                            name={'arrow-left'}
+                            size={25}
+                            color={Colors.verifiedBlack}
+                        />
+                    </Pressable>
                 )}
-            </Pressable>
+            </View>
             <Text style={styles.title}>{title}</Text>
             <View style={styles.block} />
         </View>

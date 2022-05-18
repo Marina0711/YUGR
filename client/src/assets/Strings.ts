@@ -15,5 +15,12 @@ export const Strings = {
         required: 'Обязательное поле',
         incorrectEmail: 'Некорректная почта',
         passwordIsShort: 'Пароль слишком короткий'
+    },
+    homeScreen: {
+        productList: 'Список товаров'
+    },
+    productScreen: {
+        toRate: 'Оценить',
+        addToBasket: 'Добавить в корзину'
     }
 };

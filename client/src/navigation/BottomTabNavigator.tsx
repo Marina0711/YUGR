@@ -2,7 +2,6 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 
 import { Colors } from '../assets/Colors';
 import { BasketScreen } from '../screens/BasketScreen';
@@ -15,7 +14,13 @@ enum ScreenNamesEnum {
     user = 'user'
 }
 
-const Tab = createBottomTabNavigator();
+type BottomTabNavigatorType = {
+    [ScreenNamesEnum.home]: undefined,
+    [ScreenNamesEnum.basket]: undefined,
+    [ScreenNamesEnum.user]: undefined,
+}
+
+const Tab = createBottomTabNavigator<BottomTabNavigatorType>();
 const ICON_SIZE = 20;
 
 export const BottomTabNavigator = () => {
@@ -30,30 +35,28 @@ export const BottomTabNavigator = () => {
     };
 
     return (
-        <NavigationContainer>
-            <Tab.Navigator
-                initialRouteName={ScreenNamesEnum.home}
-                screenOptions={{
-                    headerShown: false,
-                    tabBarShowLabel: false,
-                }}
-            >
-                <Tab.Screen
-                    options={getOptions(ScreenNamesEnum.home)}
-                    name={ScreenNamesEnum.home}
-                    component={HomeScreen}
-                />
-                <Tab.Screen
-                    options={getOptions(ScreenNamesEnum.basket)}
-                    name={ScreenNamesEnum.basket}
-                    component={BasketScreen}
-                />
-                <Tab.Screen
-                    options={getOptions(ScreenNamesEnum.user)}
-                    name={ScreenNamesEnum.user}
-                    component={UserScreen}
-                />
-            </Tab.Navigator>
-        </NavigationContainer>
+        <Tab.Navigator
+            initialRouteName={ScreenNamesEnum.home}
+            screenOptions={{
+                headerShown: false,
+                tabBarShowLabel: false,
+            }}
+        >
+            <Tab.Screen
+                options={getOptions(ScreenNamesEnum.home)}
+                name={ScreenNamesEnum.home}
+                component={HomeScreen}
+            />
+            <Tab.Screen
+                options={getOptions(ScreenNamesEnum.basket)}
+                name={ScreenNamesEnum.basket}
+                component={BasketScreen}
+            />
+            <Tab.Screen
+                options={getOptions(ScreenNamesEnum.user)}
+                name={ScreenNamesEnum.user}
+                component={UserScreen}
+            />
+        </Tab.Navigator>
     );
 };

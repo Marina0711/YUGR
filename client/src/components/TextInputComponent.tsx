@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import { Colors } from '../assets/Colors';
-import eye from '../assets/Icons/eye.png';
+import eye from '../assets/icons/eye.png';
 
 type TextInputComponentPropsType = {
     value: string,

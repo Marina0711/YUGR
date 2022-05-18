@@ -14,6 +14,7 @@ import { Strings } from '../assets/Strings';
 import { loginSchema } from '../constants/authValidationConstant';
 import { AuthScreenHOC } from '../HOCs/AuthScreenHOC';
 import { AuthScreenNamesEnum, AutNativeStackNavigator } from '../navigation/AuthNavigator';
+
 type LoginScreenNavigationProp = NativeStackNavigationProp<AutNativeStackNavigator, AuthScreenNamesEnum.LoginScreen>
 
 type AuthFormType = {

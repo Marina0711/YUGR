@@ -62,13 +62,13 @@ export const CarouselComponent = () => {
 
 const styles = StyleSheet.create({
     carousel: {
-        marginVertical: 10,
+        marginVertical: 10
     },
     containerTab: {
         borderRadius: 8,
         alignItems: 'center',
         paddingVertical: 10,
-        marginRight: 8
+        marginRight: 8,
     },
     text: {
         fontSize: 14,

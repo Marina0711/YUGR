@@ -13,7 +13,8 @@ export type ProductType = {
         isRated: boolean,
         rate: number
     },
-    img: string
+    img: string,
+    categoryId: number
 }
 
 class ProductStore {
@@ -40,7 +41,12 @@ class ProductStore {
             },
         ];
         this._products = [
-            { id: 0, name: 'FFFF', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff' }
+            { id: 0, name: 'Труба обычная', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 },
+            { id: 1, name: 'Труба другая', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 },
+            { id: 2, name: 'Труба сякая', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 },
+            { id: 3, name: 'Труба такая', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 },
+            { id: 4, name: 'А я думал сова', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 },
+            { id: 5, name: 'А нет, труба', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 }
         ];
         makeAutoObservable(this);
     }
