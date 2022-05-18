@@ -22,5 +22,13 @@ export const Strings = {
     productScreen: {
         toRate: 'Оценить',
         addToBasket: 'Добавить в корзину'
+    },
+    basketScreen: {
+        basket: 'Корзина',
+        empty: 'Тут ничего нет'
+    },
+    userScreen: {
+        profile: 'Профиль'
     }
+
 };

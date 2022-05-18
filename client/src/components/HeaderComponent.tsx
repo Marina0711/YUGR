@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -8,11 +8,17 @@ import { Colors } from '../assets/Colors';
 
 type HeaderComponentPropsType = {
     title?: string,
-    isBackButton?: boolean
+    isBackButton?: boolean,
+    isLogoutButton?: boolean
 }
 
+const ICON_ARROW = 'keyboard-arrow-left';
+const ICON_LOGOUT = 'logout';
+const ICON_ARROW_SIZE = 40;
+const ICON_LOGOUT_SIZE = 30;
+
 export const HeaderComponent = (props: HeaderComponentPropsType) => {
-    const { title, isBackButton = false } = props;
+    const { title, isBackButton = false, isLogoutButton = false } = props;
     const navigation = useNavigation();
 
     return (
@@ -21,15 +27,25 @@ export const HeaderComponent = (props: HeaderComponentPropsType) => {
                 {isBackButton && (
                     <Pressable onPress={navigation.goBack}>
                         <Icon
-                            name={'arrow-left'}
-                            size={25}
+                            name={ICON_ARROW}
+                            size={ICON_ARROW_SIZE}
                             color={Colors.verifiedBlack}
                         />
                     </Pressable>
                 )}
             </View>
             <Text style={styles.title}>{title}</Text>
-            <View style={styles.block} />
+            <View style={styles.block}>
+                {isLogoutButton && (
+                    <Pressable onPress={() => 0}>
+                        <Icon
+                            name={ICON_LOGOUT}
+                            size={ICON_LOGOUT_SIZE}
+                            color={Colors.verifiedBlack}
+                        />
+                    </Pressable>
+                )}
+            </View>
         </View>
     );
 };
