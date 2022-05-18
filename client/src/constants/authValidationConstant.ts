@@ -13,7 +13,16 @@ const loginRules = {
         .required(Strings.authValidation.required),
 };
 
-const confirmedPasswordRules = {
+const registrationRules = {
+    firstName: Yup.string()
+        .max(30, Strings.authValidation.limitExceeded)
+        .required(Strings.authValidation.required),
+    lastName: Yup.string()
+        .max(30, Strings.authValidation.limitExceeded)
+        .required(Strings.authValidation.required),
+    phoneNumber: Yup.string()
+        .length(11, Strings.authValidation.limitExceeded)
+        .required(Strings.authValidation.required),
     confirmedPassword: Yup.string()
         .oneOf([Yup.ref('password')], Strings.authValidation.PSWDDoNotMatch)
         .required(Strings.authValidation.required),
@@ -21,4 +30,4 @@ const confirmedPasswordRules = {
 
 export const loginSchema = Yup.object().shape(loginRules);
 
-export const registrationSchema = Yup.object().shape({ ...loginRules, ...confirmedPasswordRules });
+export const registrationSchema = Yup.object().shape({ ...loginRules, ...registrationRules });

@@ -7,14 +7,18 @@ export const Strings = {
         logIn: 'Войти',
         register: 'Зарегистрироваться',
         confirmPassword: 'Подтвердите пароль',
-        alreadyHaveAccount: 'Уже есть аккаунт?'
+        alreadyHaveAccount: 'Уже есть аккаунт?',
+        name: 'Имя',
+        surname: 'Фамилия',
+        phoneNumber: 'Номер телефона'
     },
     authValidation: {
         PSWDDoNotMatch: 'Пароли не совпадают',
         limitExceeded: 'Превышен лимит символов',
         required: 'Обязательное поле',
         incorrectEmail: 'Некорректная почта',
-        passwordIsShort: 'Пароль слишком короткий'
+        passwordIsShort: 'Пароль слишком короткий',
+        incorrectNumber: 'Некорректный номер'
     },
     homeScreen: {
         productList: 'Список товаров'
