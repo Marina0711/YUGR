@@ -29,6 +29,7 @@ export const TextInputComponent = (props: TextInputComponentPropsType) => {
             <Text style={styles.label}>{label}</Text>
             <TextInput
                 value={value}
+                textContentType={'oneTimeCode'}
                 style={styles.text}
                 secureTextEntry={isPassword}
                 onChangeText={onChangeText}
@@ -51,7 +52,7 @@ export const TextInputComponent = (props: TextInputComponentPropsType) => {
 
 const styles = StyleSheet.create({
     container:{
-        paddingTop: 35,
+        paddingTop: 20,
         borderBottomWidth: 2,
         borderBottomColor: Colors.christmasSilver
     },
