@@ -38,6 +38,8 @@ const initialValues: AuthFormType = {
     confirmedPassword: ''
 };
 
+const PHONE_NUMBER_MASK = '+7 ([000]) [000] [00] [00]';
+
 export const RegistrationScreen = () => {
     const navigation = useNavigation<RegistrationScreenNavigationProp>();
     const [isShowPassword, setIsShowPassword] = useState(true);
@@ -46,7 +48,7 @@ export const RegistrationScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
-                behavior={(Platform.OS === 'ios')? 'padding' : undefined}
+                behavior={Platform.select({ ios: 'padding', android: undefined })}
                 keyboardVerticalOffset={Platform.select({ ios: -120, android: 0 })}
                 style={{ flex: 1 }}
             >
@@ -65,29 +67,26 @@ export const RegistrationScreen = () => {
                                 <TextInputComponent
                                     value={values.firstName}
                                     label={Strings.authScreen.name}
-                                    onChangeText={handleChange('firstname')}
-                                    onBlur={handleBlur('firstname')}
+                                    onChangeText={handleChange('firstName')}
                                 />
                                 <ErrorTextComponent text={errors.firstName ?? ''} />
                                 <TextInputComponent
                                     value={values.lastName}
                                     label={Strings.authScreen.surname}
                                     onChangeText={handleChange('lastName')}
-                                    onBlur={handleBlur('lastName')}
                                 />
                                 <ErrorTextComponent text={errors.lastName ?? ''} />
                                 <TextInputComponent
                                     value={values.phoneNumber}
                                     label={Strings.authScreen.phoneNumber}
+                                    mask={PHONE_NUMBER_MASK}
                                     onChangeText={handleChange('phoneNumber')}
-                                    onBlur={handleBlur('phoneNumber')}
                                 />
                                 <ErrorTextComponent text={errors.phoneNumber ?? ''} />
                                 <TextInputComponent
                                     value={values.email}
                                     label={Strings.authScreen.email}
                                     onChangeText={handleChange('email')}
-                                    onBlur={handleBlur('email')}
                                 />
                                 <ErrorTextComponent text={errors.email ?? ''} />
                                 <TextInputComponent
@@ -96,7 +95,6 @@ export const RegistrationScreen = () => {
                                     isPassword={isShowPassword}
                                     onClickEye={() => setIsShowPassword(!isShowPassword)}
                                     onChangeText={handleChange('password')}
-                                    onBlur={handleBlur('password')}
                                 />
                                 <ErrorTextComponent text={errors.password ?? ''} />
                                 <TextInputComponent
@@ -105,7 +103,6 @@ export const RegistrationScreen = () => {
                                     isPassword={isShowConfirmationPassword}
                                     onClickEye={() => setIsConfirmationPassword(!isShowConfirmationPassword)}
                                     onChangeText={handleChange('confirmedPassword')}
-                                    onBlur={handleBlur('confirmedPassword')}
                                 />
                                 <ErrorTextComponent text={errors.confirmedPassword ?? ''} />
                             </ScrollView>

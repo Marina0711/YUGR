@@ -21,7 +21,7 @@ const registrationRules = {
         .max(30, Strings.authValidation.limitExceeded)
         .required(Strings.authValidation.required),
     phoneNumber: Yup.string()
-        .length(11, Strings.authValidation.limitExceeded)
+        .length(18, Strings.authValidation.incorrectNumber)
         .required(Strings.authValidation.required),
     confirmedPassword: Yup.string()
         .oneOf([Yup.ref('password')], Strings.authValidation.PSWDDoNotMatch)

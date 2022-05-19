@@ -8,6 +8,7 @@ import {
     TextInputFocusEventData, TouchableOpacity,
     View
 } from 'react-native';
+import TextInputMask from 'react-native-text-input-mask';
 
 import { Colors } from '../assets/Colors';
 import eye from '../assets/icons/eye.png';
@@ -16,25 +17,38 @@ type TextInputComponentPropsType = {
     value: string,
     label: string,
     onChangeText: (text: string) => void,
-    onBlur: (e:  NativeSyntheticEvent<TextInputFocusEventData>) => void,
+    onBlur?: (e:  NativeSyntheticEvent<TextInputFocusEventData>) => void,
     isPassword?: boolean,
+    mask?: string,
     onClickEye?: () => void
 }
 
 export const TextInputComponent = (props: TextInputComponentPropsType) => {
-    const { value, label, isPassword, onChangeText, onBlur, onClickEye } = props;
+    const { value, label, isPassword, mask, onChangeText, onBlur, onClickEye } = props;
 
     return (
         <View style={styles.container}>
             <Text style={styles.label}>{label}</Text>
-            <TextInput
-                value={value}
-                textContentType={'oneTimeCode'}
-                style={styles.text}
-                secureTextEntry={isPassword}
-                onChangeText={onChangeText}
-                onBlur={onBlur}
-            />
+            {
+                mask ? (
+                    <TextInputMask
+                        value={value}
+                        style={styles.text}
+                        mask={mask}
+                        onChangeText={onChangeText}
+                        onBlur={onBlur}
+                    />
+                ) : (
+                    <TextInput
+                        value={value}
+                        textContentType={'oneTimeCode'}
+                        style={styles.text}
+                        secureTextEntry={isPassword}
+                        onChangeText={onChangeText}
+                        onBlur={onBlur}
+                    />
+                )
+            }
             {
                 onClickEye && (
                     <TouchableOpacity onPress={onClickEye}>
