@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 
 import { Colors } from '../assets/Colors';
+import AsyncStorageHelper, { AsyncStorageKeysEnum } from '../helpers/AsyncStorageHelper';
+import { userStore } from '../store/UserStore';
 
 type HeaderComponentPropsType = {
     title?: string,
@@ -21,11 +23,21 @@ export const HeaderComponent = (props: HeaderComponentPropsType) => {
     const { title, isBackButton = false, isLogoutButton = false } = props;
     const navigation = useNavigation();
 
+    const goBack = () => {
+        navigation.goBack();
+    };
+
+    const logout = async () => {
+        userStore.setUser(null);
+        userStore.setIsAuth(false);
+        await AsyncStorageHelper.remove(AsyncStorageKeysEnum.token);
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.block}>
                 {isBackButton && (
-                    <Pressable onPress={navigation.goBack}>
+                    <Pressable onPress={goBack}>
                         <Icon
                             name={ICON_ARROW}
                             size={ICON_ARROW_SIZE}
@@ -37,7 +49,7 @@ export const HeaderComponent = (props: HeaderComponentPropsType) => {
             <Text style={styles.title}>{title}</Text>
             <View style={styles.block}>
                 {isLogoutButton && (
-                    <Pressable onPress={() => 0}>
+                    <Pressable onPress={logout}>
                         <Icon
                             name={ICON_LOGOUT}
                             size={ICON_LOGOUT_SIZE}

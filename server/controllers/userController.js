@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { User, Order } = require('../models/index')
 
-const generateJwt = (id, email, role) => jwt.sign(
-    {id, email, role},
+const generateJwt = (id, email, role, firstName, lastName, phoneNumber ) => jwt.sign(
+    {id, email, role, firstName, lastName, phoneNumber },
     process.env.SECRET_KEY,
     {expiresIn: '24h'}
 )
