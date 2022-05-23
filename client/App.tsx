@@ -4,6 +4,8 @@ import { RootSiblingParent } from 'react-native-root-siblings';
 
 import { observer } from 'mobx-react-lite';
 
+import { refreshToken } from './src/api/UserApi';
+
 import { Colors } from './src/assets/Colors';
 import { authSubmitHelper } from './src/helpers/AuthSubmitHelper';
 import { RootNavigator } from './src/navigation/RootNavigator';
@@ -12,7 +14,7 @@ import { userStore } from './src/store/UserStore';
 
 const App = observer(() => {
     useEffect(() => {
-        authSubmitHelper();
+        authSubmitHelper(() => refreshToken());
     }, []);
 
     if (userStore.status === StatusEnum.loading) {

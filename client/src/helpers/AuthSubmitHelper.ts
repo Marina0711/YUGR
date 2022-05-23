@@ -1,24 +1,13 @@
-import { login, refreshToken, registration } from '../api/UserApi';
-
-import { LoginFormType } from '../screens/LoginScreen';
-import { RegistrationFormType } from '../screens/RegistrationScreen';
-import { StatusEnum } from '../store/types';
+import { StatusEnum, UserType } from '../store/types';
 import { userStore } from '../store/UserStore';
 
 import { displayErrorToast } from './ToastDisplayHelper';
 
-export const authSubmitHelper = async (values?: LoginFormType | RegistrationFormType) => {
+export const authSubmitHelper = async (authOperation: () => Promise<UserType | void>) => {
     try {
-        let user;
         userStore.setStatus(StatusEnum.loading);
 
-        if (!values) {
-            user = await refreshToken();
-        } else if ((values as RegistrationFormType).phoneNumber) {
-            user = await registration(values as RegistrationFormType);
-        } else {
-            user = await login(values as LoginFormType);
-        }
+        const user = await authOperation();
 
         if (user) {
             userStore.setUser(user);

@@ -23,10 +23,6 @@ export const HeaderComponent = (props: HeaderComponentPropsType) => {
     const { title, isBackButton = false, isLogoutButton = false } = props;
     const navigation = useNavigation();
 
-    const goBack = () => {
-        navigation.goBack();
-    };
-
     const logout = async () => {
         userStore.setUser(null);
         userStore.setIsAuth(false);
@@ -37,7 +33,7 @@ export const HeaderComponent = (props: HeaderComponentPropsType) => {
         <View style={styles.container}>
             <View style={styles.block}>
                 {isBackButton && (
-                    <Pressable onPress={goBack}>
+                    <Pressable onPress={() => navigation.goBack()}>
                         <Icon
                             name={ICON_ARROW}
                             size={ICON_ARROW_SIZE}

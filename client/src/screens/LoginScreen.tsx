@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import { observer } from 'mobx-react-lite';
 
+import { login } from '../api/UserApi';
+
 import { DarkButtonComponent } from '../components/DarkButtonComponent';
 import { ErrorTextComponent } from '../components/ErrorTextComponent';
 import { HeaderLogoComponent } from '../components/HeaderLogoComponent';
@@ -35,7 +37,7 @@ export const LoginScreen = observer(() => {
     const [isShowPassword, setIsShowPassword] = useState(true);
 
     const onSubmit = async (values: LoginFormType) => {
-        await authSubmitHelper(values);
+        await authSubmitHelper(() => login(values));
     };
 
     return (

@@ -5,6 +5,8 @@ import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 
+import { registration } from '../api/UserApi';
+
 import { DarkButtonComponent } from '../components/DarkButtonComponent';
 import { ErrorTextComponent } from '../components/ErrorTextComponent';
 import { HeaderLogoComponent } from '../components/HeaderLogoComponent';
@@ -55,7 +57,7 @@ export const RegistrationScreen = () => {
             phoneNumber: values.phoneNumber
         };
 
-        await authSubmitHelper(userParams);
+        await authSubmitHelper(() => registration(userParams));
     };
 
     return (
