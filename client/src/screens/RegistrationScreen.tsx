@@ -5,6 +5,8 @@ import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 
+import { registration } from '../api/UserApi';
+
 import { DarkButtonComponent } from '../components/DarkButtonComponent';
 import { ErrorTextComponent } from '../components/ErrorTextComponent';
 import { HeaderLogoComponent } from '../components/HeaderLogoComponent';
@@ -13,6 +15,7 @@ import { TextInputComponent } from '../components/TextInputComponent';
 import { Colors } from '../assets/Colors';
 import { Strings } from '../assets/Strings';
 import { registrationSchema } from '../constants/authValidationConstant';
+import { authSubmitHelper } from '../helpers/AuthSubmitHelper';
 import { AuthScreenNamesEnum, AutNativeStackNavigator } from '../navigation/AuthNavigator';
 
 type RegistrationScreenNavigationProp = NativeStackNavigationProp<
@@ -20,7 +23,7 @@ type RegistrationScreenNavigationProp = NativeStackNavigationProp<
     AuthScreenNamesEnum.RegistrationScreen
     >
 
-type AuthFormType = {
+export type RegistrationFormType = {
     firstName: string,
     lastName: string,
     phoneNumber: string,
@@ -29,7 +32,7 @@ type AuthFormType = {
     confirmedPassword: string
 }
 
-const initialValues: AuthFormType = {
+const initialValues: RegistrationFormType = {
     firstName: '',
     lastName: '',
     phoneNumber: '',
@@ -45,6 +48,18 @@ export const RegistrationScreen = () => {
     const [isShowPassword, setIsShowPassword] = useState(true);
     const [isShowConfirmationPassword, setIsConfirmationPassword] = useState(true);
 
+    const onSubmit = async (values: RegistrationFormType) => {
+        const userParams = {
+            email: values.email,
+            password: values.password,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            phoneNumber: values.phoneNumber
+        };
+
+        await authSubmitHelper(() => registration(userParams));
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView
@@ -59,7 +74,7 @@ export const RegistrationScreen = () => {
                     validationSchema={registrationSchema}
                     validateOnBlur={false}
                     validateOnChange={false}
-                    onSubmit={values => console.log(values)}
+                    onSubmit={onSubmit}
                 >
                     {({ handleChange, errors, handleBlur, handleSubmit, values }) => (
                         <>

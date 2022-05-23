@@ -33,6 +33,8 @@ export const Strings = {
     },
     userScreen: {
         profile: 'Профиль'
+    },
+    errors: {
+        loginRequired: 'Необходимо войти'
     }
-
 };

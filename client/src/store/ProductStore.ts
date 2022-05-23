@@ -1,70 +1,38 @@
 import { makeAutoObservable } from 'mobx';
 
-export type CategoryType = {
-    id: number,
-    name: string
-}
-
-export type ProductType = {
-    id: number,
-    name: string,
-    price: number,
-    rating: {
-        isRated: boolean,
-        rate: number
-    },
-    img: string,
-    categoryId: number
-}
+import { ProductType, StatusEnum } from './types';
 
 class ProductStore {
-    private _categories: CategoryType[];
     private _products: ProductType[];
+    private _status: StatusEnum;
 
     constructor() {
-        this._categories = [
-            {
-                id: 1,
-                name: 'Труба',
-            },
-            {
-                id: 2,
-                name: 'Еще одна',
-            },
-            {
-                id: 3,
-                name: 'Ого, труба',
-            },
-            {
-                id: 4,
-                name: 'И снова труба',
-            },
-        ];
         this._products = [
-            { id: 0, name: 'Труба обычная', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 },
-            { id: 1, name: 'Труба другая', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 },
-            { id: 2, name: 'Труба сякая', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 },
+            { id: 0, name: 'Труба обычная', price: 44, rating: { isRated: true, rate: 4.4 }, img: 'ffff', categoryId: 1 },
+            { id: 1, name: 'Труба другая', price: 105, rating: { isRated: false, rate: 3.4 }, img: 'ffff', categoryId: 1 },
+            { id: 2, name: 'Труба сякая', price: 666, rating: { isRated: false, rate: 5 }, img: 'ffff', categoryId: 1 },
             { id: 3, name: 'Труба такая', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 },
-            { id: 4, name: 'А я думал сова', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 },
+            { id: 4, name: 'А я думал сова', price: 44, rating: { isRated: false, rate: 4.9 }, img: 'ffff', categoryId: 1 },
             { id: 5, name: 'А нет, труба', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 }
         ];
+        this._status = StatusEnum.success;
         makeAutoObservable(this);
     }
 
-    setTypes(categories: CategoryType[]) {
-        this._categories = categories;
+    setStatus(status: StatusEnum) {
+        this._status = status;
     }
 
     setProducts(products: ProductType[]) {
         this._products = products;
     }
 
-    get categories() {
-        return this._categories;
-    }
-
     get products() {
         return this._products;
+    }
+
+    get status() {
+        return this._status;
     }
 }
 

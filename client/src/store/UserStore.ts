@@ -1,20 +1,28 @@
 import { makeAutoObservable } from 'mobx';
 
+import { StatusEnum, UserType } from './types';
+
 class UserStore {
     private _isAuth: boolean;
-    private _user: {};
+    private _user: UserType | null;
+    private _status: StatusEnum;
 
     constructor() {
-        this._isAuth = true;
-        this._user = {};
+        this._isAuth = false;
+        this._user = null;
+        this._status = StatusEnum.success;
         makeAutoObservable(this);
+    }
+
+    setStatus(status: StatusEnum) {
+        this._status = status;
     }
 
     setIsAuth(isAuth: boolean) {
         this._isAuth = isAuth;
     }
 
-    setUser(user: any) {
+    setUser(user: UserType | null) {
         this._user = user;
     }
 
@@ -24,6 +32,10 @@ class UserStore {
 
     get user() {
         return this._user;
+    }
+
+    get status() {
+        return this._status;
     }
 }
 

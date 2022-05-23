@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text } from 'react-native';
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
+import { observer } from 'mobx-react-lite';
+
+import { login } from '../api/UserApi';
 
 import { DarkButtonComponent } from '../components/DarkButtonComponent';
 import { ErrorTextComponent } from '../components/ErrorTextComponent';
@@ -14,23 +17,28 @@ import { TextInputComponent } from '../components/TextInputComponent';
 import { Colors } from '../assets/Colors';
 import { Strings } from '../assets/Strings';
 import { loginSchema } from '../constants/authValidationConstant';
+import { authSubmitHelper } from '../helpers/AuthSubmitHelper';
 import { AuthScreenNamesEnum, AutNativeStackNavigator } from '../navigation/AuthNavigator';
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<AutNativeStackNavigator, AuthScreenNamesEnum.LoginScreen>
 
-type AuthFormType = {
+export type LoginFormType = {
     email: string,
     password: string
 }
 
-const initialValues: AuthFormType = {
+const initialValues: LoginFormType = {
     email: '',
     password: ''
 };
 
-export const LoginScreen = () => {
+export const LoginScreen = observer(() => {
     const navigation = useNavigation<LoginScreenNavigationProp>();
     const [isShowPassword, setIsShowPassword] = useState(true);
+
+    const onSubmit = async (values: LoginFormType) => {
+        await authSubmitHelper(() => login(values));
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -46,7 +54,7 @@ export const LoginScreen = () => {
                     validationSchema={loginSchema}
                     validateOnBlur={false}
                     validateOnChange={false}
-                    onSubmit={values => console.log(values)}
+                    onSubmit={onSubmit}
                 >
                     {({ handleChange, errors,resetForm , handleBlur, handleSubmit, values }) => (
                         <>
@@ -91,7 +99,7 @@ export const LoginScreen = () => {
             </KeyboardAvoidingView>
         </SafeAreaView>
     );
-};
+});
 
 const styles = StyleSheet.create({
     container:{
