@@ -63,10 +63,10 @@ class ProductController {
 
     async getAll(req, res, next) {
         try {
-            const { categoryId, limit = 10 , page = 1 } = req.body
+            const { categoryId , page = 1, limit = 10 } = req.query
             const offset = page * limit - limit
 
-            const query = categoryId ? {where: {categoryId}, limit, offset } : { limit, offset };
+            const query = categoryId > 0 ? {where: {categoryId}, limit, offset } : { limit, offset };
 
             const products = await Product.findAndCountAll(query)
 

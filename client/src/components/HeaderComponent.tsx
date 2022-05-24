@@ -33,7 +33,7 @@ export const HeaderComponent = (props: HeaderComponentPropsType) => {
         <View style={styles.container}>
             <View style={styles.block}>
                 {isBackButton && (
-                    <Pressable onPress={() => navigation.goBack()}>
+                    <Pressable onPress={navigation.goBack}>
                         <Icon
                             name={ICON_ARROW}
                             size={ICON_ARROW_SIZE}

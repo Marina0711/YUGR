@@ -1,28 +1,40 @@
 import React from 'react';
 import {
-    FlatList,
+    FlatList, Image,
     ListRenderItemInfo,
     StyleSheet,
     Text,
     TouchableOpacity,
-    View
 } from 'react-native';
 import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import { useNavigation } from '@react-navigation/native';
 
+import 'react-native-dotenv';
+
 import { Colors } from '../assets/Colors';
+import { Strings } from '../assets/Strings';
 import { RootNativeStackNavigator, RootScreenNamesEnum } from '../navigation/RootNavigator';
-import { productStore, ProductType } from '../store/ProductStore';
+import { ProductType } from '../store/types';
+
+import { EmptyListComponent } from './EmptyListComponent';
+import { LoadingComponent } from './LoadingComponent';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootNativeStackNavigator, RootScreenNamesEnum.ProductScreen>
+
+type ProductListComponentPropsType = {
+    data: ProductType[],
+    isLoading: boolean,
+    onEndReached: () => void
+}
 
 const NUM_COLUMNS = 2;
 const ICON_NAME = 'plus';
 const ICON_SIZE = 20;
 
-export const ProductListComponent = () => {
+export const ProductListComponent = (props: ProductListComponentPropsType) => {
+    const { data, isLoading, onEndReached } = props;
     const navigation = useNavigation<HomeScreenNavigationProp>();
 
     const goToProductScreen = (product: ProductType) => {
@@ -30,20 +42,14 @@ export const ProductListComponent = () => {
     };
 
     const renderItem = ({ item }: ListRenderItemInfo<ProductType>) => {
+        const uri = process.env.REACT_APP_API_URL+ '/' + item.img;
+
         return(
             <TouchableOpacity
                 style={styles.itemContainer}
                 onPress={() => goToProductScreen(item)}
             >
-                {/*todo insert picture*/}
-                <View
-                    style={{
-                        width: '100%',
-                        height: 150,
-                        backgroundColor: Colors.tin,
-                        borderRadius: 8
-                    }}
-                />
+                <Image source={{ uri }} style={styles.img}/>
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.price} >{item.price} ₽</Text>
                 <TouchableOpacity
@@ -56,16 +62,36 @@ export const ProductListComponent = () => {
         );
     };
 
+    const renderEmptyList = () => {
+        return (
+            <EmptyListComponent text={Strings.homeScreen.noProducts} style={styles.emptyComponent} />
+        );
+    };
+
     const getKeyExtractor = (item: ProductType) => item.id + item.name;
+
+    const renderListFooterComponent = () => {
+        return(
+            <>
+                {isLoading && data.length > 0 && (
+                    <LoadingComponent style={styles.loading} />
+                )}
+            </>
+        );
+    };
 
     return (
         <FlatList
-            data={productStore.products}
+            data={data}
             renderItem={renderItem}
             columnWrapperStyle={styles.row}
             numColumns={NUM_COLUMNS}
+            ListEmptyComponent={renderEmptyList}
             keyExtractor={getKeyExtractor}
             showsVerticalScrollIndicator={false}
+            ListFooterComponent={renderListFooterComponent}
+            onEndReached={onEndReached}
+            onEndReachedThreshold={0.1}
         />
     );
 };
@@ -78,6 +104,14 @@ const styles = StyleSheet.create({
     },
     itemContainer: {
         flex: 0.47,
+    },
+    emptyComponent: {
+        marginTop: 150
+    },
+    img: {
+        width: 150,
+        height: 150,
+        borderRadius: 8
     },
     name: {
         fontSize: 14,
@@ -101,5 +135,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 8,
         backgroundColor: Colors.kettleman
+    },
+    loading: {
+        backgroundColor: Colors.bleachedSilk
     }
 });

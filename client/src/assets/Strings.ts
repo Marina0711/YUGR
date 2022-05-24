@@ -21,7 +21,9 @@ export const Strings = {
         incorrectNumber: 'Некорректный номер'
     },
     homeScreen: {
-        productList: 'Список товаров'
+        productList: 'Список товаров',
+        noProducts: 'Товары отсутствуют',
+        all: 'Все'
     },
     productScreen: {
         toRate: 'Оценить',

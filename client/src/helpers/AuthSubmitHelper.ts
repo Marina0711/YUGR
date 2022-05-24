@@ -15,7 +15,9 @@ export const authSubmitHelper = async (authOperation: () => Promise<UserType | v
             userStore.setStatus(StatusEnum.success);
         }
     } catch(e) {
+        if (e.message) {
+            displayErrorToast(e.message);
+        }
         userStore.setStatus(StatusEnum.error);
-        displayErrorToast(e.message);
     }
 };
