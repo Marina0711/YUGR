@@ -37,6 +37,9 @@ export const Strings = {
         profile: 'Профиль'
     },
     errors: {
-        loginRequired: 'Необходимо войти'
+        somethingWentWrong: 'Что-то пошло не так'
+    },
+    ratingModal: {
+        rateProduct: 'Оценить товар'
     }
 };

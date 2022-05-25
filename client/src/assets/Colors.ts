@@ -8,5 +8,6 @@ export const Colors = {
     pixelWhite: '#DBDBDB',
     kettleman: '#606060',
     offBlack: '#303030',
-    bleachedSilk: '#F2F2F2'
+    bleachedSilk: '#F2F2F2',
+    eyelashViper: '#f2c94c'
 };

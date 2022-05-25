@@ -34,10 +34,15 @@ export const HomeScreen = observer(() => {
     };
 
     const onEndReached = () => {
-        if (productStore.page !== pageCount) {
+        if (productStore.page < pageCount) {
             const nextPage = productStore.page + 1;
             productStore.fetchProducts(activeCategoryId, nextPage);
         }
+    };
+
+    const onRefresh = () => {
+        productStore.fetchProducts(activeCategoryId);
+        productStore.setPage(1);
     };
 
     return (
@@ -55,6 +60,7 @@ export const HomeScreen = observer(() => {
                     data={productStore.products}
                     isLoading={isLoading}
                     onEndReached={onEndReached}
+                    onRefresh={onRefresh}
                 />
             </View>
         </SafeAreaView>
