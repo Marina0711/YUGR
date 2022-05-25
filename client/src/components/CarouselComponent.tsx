@@ -23,7 +23,7 @@ export const CarouselComponent = (props: CarouselComponentPropsType ) => {
     const { data, activeId, onClick } = props;
     const carouselRef = useRef<Carousel<CategoryType>>(null);
 
-    const onPress = (id: number) => {
+    const onPressItem = (id: number) => {
         carouselRef?.current?.snapToItem(id);
         onClick(id);
     };
@@ -37,7 +37,7 @@ export const CarouselComponent = (props: CarouselComponentPropsType ) => {
                     ...styles.containerTab,
                     backgroundColor:  isActive ? Colors.verifiedBlack : Colors.pixelWhite
                 }}
-                onPress={() => !isActive && onPress(item.id)}
+                onPress={() => !isActive && onPressItem(item.id)}
             >
                 <Text
                     style={{

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
 import { RootSiblingParent } from 'react-native-root-siblings';
-import SplashScreen from 'react-native-splash-screen';
 
 import { observer } from 'mobx-react-lite';
 
@@ -16,7 +15,6 @@ import { userStore } from './src/store/UserStore';
 
 const App = observer(() => {
     useEffect(() => {
-        SplashScreen.hide();
         authSubmitHelper(() => refreshToken());
     }, []);
 

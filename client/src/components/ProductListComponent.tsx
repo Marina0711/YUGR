@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-    FlatList, Image,
+    FlatList,
+    Image,
     ListRenderItemInfo,
     StyleSheet,
     Text,
@@ -10,8 +11,6 @@ import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import { useNavigation } from '@react-navigation/native';
-
-import 'react-native-dotenv';
 
 import { Colors } from '../assets/Colors';
 import { Strings } from '../assets/Strings';
