@@ -21,19 +21,22 @@ export const HomeScreen = observer(() => {
 
     useEffect(() => {
         categoryStore.fetchCategories();
-        productStore.fetchCategories();
+        productStore.fetchProducts();
     }, []);
 
-    const onClickByCategory = (id: number) => {
-        setActiveCategoryId(id);
-        productStore.fetchCategories(id);
-        productStore.setPage(1);
+    const onPressByCategory = (isActive: boolean, id: number, snapToItem: (id: number) => void) => {
+        if (!isActive) {
+            snapToItem(id);
+            setActiveCategoryId(id);
+            productStore.fetchProducts(id);
+            productStore.setPage(1);
+        }
     };
 
     const onEndReached = () => {
         if (productStore.page !== pageCount) {
             const nextPage = productStore.page + 1;
-            productStore.fetchCategories(activeCategoryId, nextPage);
+            productStore.fetchProducts(activeCategoryId, nextPage);
         }
     };
 
@@ -45,7 +48,7 @@ export const HomeScreen = observer(() => {
                     <CarouselComponent
                         data={categoryStore.categories}
                         activeId={activeCategoryId}
-                        onClick={onClickByCategory}
+                        onPress={onPressByCategory}
                     />
                 </View>
                 <ProductListComponent

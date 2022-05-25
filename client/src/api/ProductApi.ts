@@ -25,7 +25,6 @@ type ProductDetailsType = {
         isRated: boolean,
         rate: number
     }
-
 }
 
 export const getProducts = async (

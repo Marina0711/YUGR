@@ -50,7 +50,7 @@ class ProductStore {
         this._page = page;
     }
 
-    async fetchCategories(id?: number, nextPage?: number) {
+    async fetchProducts(id?: number, nextPage?: number) {
         try {
             this.setStatus(StatusEnum.loading);
             const products  = await getProducts(id, nextPage);

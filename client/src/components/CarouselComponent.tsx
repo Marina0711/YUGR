@@ -16,16 +16,15 @@ type RenderSliderItemType = {
 type CarouselComponentPropsType = {
     data: CategoryType[],
     activeId: number,
-    onClick: (id: number) => void
+    onPress: (isActive: boolean, id: number, snapToItem: (id: number) => void) => void
 }
 
 export const CarouselComponent = (props: CarouselComponentPropsType ) => {
-    const { data, activeId, onClick } = props;
+    const { data, activeId, onPress } = props;
     const carouselRef = useRef<Carousel<CategoryType>>(null);
 
-    const onPressItem = (id: number) => {
+    const snapToItem = (id: number) => {
         carouselRef?.current?.snapToItem(id);
-        onClick(id);
     };
 
     const renderSliderItem = ({ item, index }: RenderSliderItemType) => {
@@ -37,7 +36,7 @@ export const CarouselComponent = (props: CarouselComponentPropsType ) => {
                     ...styles.containerTab,
                     backgroundColor:  isActive ? Colors.verifiedBlack : Colors.pixelWhite
                 }}
-                onPress={() => !isActive && onPressItem(item.id)}
+                onPress={() => onPress(isActive, item.id, snapToItem)}
             >
                 <Text
                     style={{
