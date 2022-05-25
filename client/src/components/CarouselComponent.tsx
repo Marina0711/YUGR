@@ -1,9 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
 import { Colors } from '../assets/Colors';
-import { categoryStore } from '../store/CategoryStore';
 import { CategoryType } from '../store/types';
 
 const SCREEN_WIDTH = Dimensions.get('window').width - 40;
@@ -14,17 +13,22 @@ type RenderSliderItemType = {
     index: number
 }
 
-export const CarouselComponent = () => {
-    const [activeIndex, setActiveIndex] = useState<number>(1);
+type CarouselComponentPropsType = {
+    data: CategoryType[],
+    activeId: number,
+    onPress: (isActive: boolean, id: number, snapToItem: (id: number) => void) => void
+}
+
+export const CarouselComponent = (props: CarouselComponentPropsType ) => {
+    const { data, activeId, onPress } = props;
     const carouselRef = useRef<Carousel<CategoryType>>(null);
 
-    const onPress = (index: number) => {
-        setActiveIndex(index);
-        carouselRef?.current?.snapToItem(index);
+    const snapToItem = (id: number) => {
+        carouselRef?.current?.snapToItem(id);
     };
 
     const renderSliderItem = ({ item, index }: RenderSliderItemType) => {
-        const isActive = activeIndex === index;
+        const isActive = activeId === index;
 
         return (
             <TouchableOpacity
@@ -32,7 +36,7 @@ export const CarouselComponent = () => {
                     ...styles.containerTab,
                     backgroundColor:  isActive ? Colors.verifiedBlack : Colors.pixelWhite
                 }}
-                onPress={() => onPress(index)}
+                onPress={() => onPress(isActive, item.id, snapToItem)}
             >
                 <Text
                     style={{
@@ -50,7 +54,7 @@ export const CarouselComponent = () => {
         <Carousel
             ref={carouselRef}
             activeSlideAlignment={'start'}
-            data={categoryStore.categories}
+            data={data}
             renderItem={renderSliderItem}
             sliderWidth={SCREEN_WIDTH}
             itemWidth={SLIDER_ITEM_WIDTH}

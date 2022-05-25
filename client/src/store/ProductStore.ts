@@ -1,22 +1,37 @@
 import { makeAutoObservable } from 'mobx';
 
+import { getProducts } from '../api/ProductApi';
+
 import { ProductType, StatusEnum } from './types';
 
 class ProductStore {
     private _products: ProductType[];
     private _status: StatusEnum;
+    private _count: number;
+    private _page: number;
 
     constructor() {
-        this._products = [
-            { id: 0, name: 'Труба обычная', price: 44, rating: { isRated: true, rate: 4.4 }, img: 'ffff', categoryId: 1 },
-            { id: 1, name: 'Труба другая', price: 105, rating: { isRated: false, rate: 3.4 }, img: 'ffff', categoryId: 1 },
-            { id: 2, name: 'Труба сякая', price: 666, rating: { isRated: false, rate: 5 }, img: 'ffff', categoryId: 1 },
-            { id: 3, name: 'Труба такая', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 },
-            { id: 4, name: 'А я думал сова', price: 44, rating: { isRated: false, rate: 4.9 }, img: 'ffff', categoryId: 1 },
-            { id: 5, name: 'А нет, труба', price: 44, rating: { isRated: false, rate: 4.4 }, img: 'ffff', categoryId: 1 }
-        ];
+        this._products = [];
+        this._count = 0;
+        this._page = 1;
         this._status = StatusEnum.success;
         makeAutoObservable(this);
+    }
+
+    get products() {
+        return this._products;
+    }
+
+    get status() {
+        return this._status;
+    }
+
+    get count() {
+        return this._count;
+    }
+
+    get page() {
+        return this._page;
     }
 
     setStatus(status: StatusEnum) {
@@ -27,12 +42,31 @@ class ProductStore {
         this._products = products;
     }
 
-    get products() {
-        return this._products;
+    setCount(count: number) {
+        this._count = count;
     }
 
-    get status() {
-        return this._status;
+    setPage(page: number) {
+        this._page = page;
+    }
+
+    async fetchProducts(id?: number, nextPage?: number) {
+        try {
+            this.setStatus(StatusEnum.loading);
+            const products  = await getProducts(id, nextPage);
+
+            if (nextPage && products) {
+                this.setProducts([...this.products, ...products.rows]);
+                this.setPage(nextPage);
+            } else if (products) {
+                this.setProducts(products.rows);
+                this.setCount(products.count);
+            }
+
+            this.setStatus(StatusEnum.success);
+        } catch (e) {
+            this.setStatus(StatusEnum.error);
+        }
     }
 }
 

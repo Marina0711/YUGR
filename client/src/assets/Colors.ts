@@ -7,5 +7,6 @@ export const Colors = {
     pleasantPomegranate: '#CC3300',
     pixelWhite: '#DBDBDB',
     kettleman: '#606060',
-    offBlack: '#303030'
+    offBlack: '#303030',
+    bleachedSilk: '#F2F2F2'
 };

@@ -1,6 +1,5 @@
 import jwt_decode from 'jwt-decode';
 
-import { Strings } from '../assets/Strings';
 import AsyncStorageHelper, { AsyncStorageKeysEnum } from '../helpers/AsyncStorageHelper';
 import { UserType } from '../store/types';
 
@@ -44,6 +43,6 @@ export const refreshToken = async (): Promise<UserType | undefined | void> => {
         const { data } = await authAxiosConfig.get('/user/refreshToken');
         return jwt_decode(data.token);
     } catch (e) {
-        throw new Error(Strings.errors.loginRequired);
+        throw new Error('');
     }
 };
