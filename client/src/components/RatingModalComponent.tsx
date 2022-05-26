@@ -9,6 +9,7 @@ import { Strings } from '../assets/Strings';
 import { displayErrorToast } from '../helpers/ToastDisplayHelper';
 import { userStore } from '../store/UserStore';
 
+import { HeaderLogoComponent } from './HeaderLogoComponent';
 import { LightButtonComponent } from './LightButtonComponent';
 import { StarsComponent } from './StarsComponent';
 
@@ -49,6 +50,7 @@ export const RatingModalComponent = (props: RatingModalComponentPropsType) => {
             onBackdropPress={onBackdropPress}
         >
             <View style={styles.content}>
+                <HeaderLogoComponent style={styles.header} />
                 <StarsComponent rate={rate} setRate={setRate} iconSize={ICON_SIZE} />
                 <LightButtonComponent
                     title={Strings.ratingModal.rateProduct}
@@ -65,10 +67,13 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.pixelWhite,
         borderRadius: 8,
         alignItems: 'center',
-        padding: 25
+        padding: 25,
+    },
+    header: {
+        marginTop: 0,
+        marginBottom: 20
     },
     button: {
-        paddingVertical: 7,
         paddingHorizontal: 15,
         marginTop: 20
     }

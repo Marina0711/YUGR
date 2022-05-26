@@ -19,9 +19,9 @@ export const getProducts = async (
     }
 };
 
-export const getOneProduct = async (id: number, user: number): Promise<ProductDetailsType | undefined> => {
+export const getOneProduct = async (id: number, userId: number): Promise<ProductDetailsType | undefined> => {
     try {
-        const { data } = await authAxiosConfig.get('/product/' + id, { params: { user } });
+        const { data } = await authAxiosConfig.get('/product/' + id, { params: { userId } });
         return data;
     } catch (e) {
         throw new Error(e.response.data.message);

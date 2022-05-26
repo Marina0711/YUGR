@@ -1,11 +1,17 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View, ViewStyle } from 'react-native';
 
 import logo from '../assets/icons/logo.png';
 
-export const HeaderLogoComponent = () => {
+type HeaderLogoComponent = {
+    style: ViewStyle
+}
+
+export const HeaderLogoComponent = (props: HeaderLogoComponent) => {
+    const { style } = props;
+
     return (
-        <View style={styles.header}>
+        <View style={[styles.header, style]}>
             <View style={styles.line} />
             <View style={styles.logo}>
                 <Image source={logo} style={styles.img} />
@@ -20,7 +26,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     logo: {
         display: 'flex',

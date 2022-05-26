@@ -79,7 +79,7 @@ class ProductController {
     async getOne(req, res, next) {
         try {
             const { id } = req.params
-            const { user } = req.query
+            const { userId } = req.query
 
             const product = await Product.findOne(
                 {
@@ -92,7 +92,7 @@ class ProductController {
                 return next(ApiError.notFound('Нет такой трубы, дружок!)'))
             }
 
-            return res.json({...product.dataValues, rateInfo: getRateData(product.rateInfo, user)})
+            return res.json({...product.dataValues, rateInfo: getRateData(product.rateInfo, userId)})
         } catch (e) {
             next(ApiError.badRequest((e.message)))
         }
