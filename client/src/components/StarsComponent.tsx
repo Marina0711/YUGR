@@ -18,10 +18,10 @@ enum StarsEnum {
 
 const stars = [1, 2, 3, 4, 5];
 
-const getStarName = (i: number, fullStars: number, halfStar: number) => {
-    if (i <= fullStars) {
+const getStarName = (i: number, fullStarIndexes: number, halfStarIndex: number) => {
+    if (i <= fullStarIndexes) {
         return StarsEnum.sharp;
-    } else if (i === halfStar) {
+    } else if (i === halfStarIndex) {
         return StarsEnum.half;
     } else {
         return StarsEnum.outline;
@@ -30,8 +30,8 @@ const getStarName = (i: number, fullStars: number, halfStar: number) => {
 
 export const StarsComponent = (props: RatingComponentPropsType) => {
     const { rate, setRate, iconSize = 25 } = props;
-    const fullStars = Math.trunc(rate);
-    const halfStar = Math.ceil(rate);
+    const fullStarIndexes = Math.trunc(rate);
+    const halfStarIndex = Math.ceil(rate);
 
     return (
         <View style={styles.container}>
@@ -42,7 +42,7 @@ export const StarsComponent = (props: RatingComponentPropsType) => {
                     onPress={() => setRate && setRate(i)}
                 >
                     <Icon
-                        name={getStarName(i, fullStars, halfStar)}
+                        name={getStarName(i, fullStarIndexes, halfStarIndex)}
                         size={iconSize}
                         color={Colors.eyelashViper}
                         style={styles.star}
