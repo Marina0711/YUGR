@@ -48,3 +48,13 @@ export type ProductDetailsType = {
         rate: number
     }
 }
+
+export type AddedProductsType = ProductType & {
+    count: number
+}
+
+export type OrderType = {
+    id: number,
+    data: Date,
+    products: AddedProductsType[]
+}

@@ -4,7 +4,7 @@ import { Image, StyleSheet, View, ViewStyle } from 'react-native';
 import logo from '../assets/icons/logo.png';
 
 type HeaderLogoComponent = {
-    style: ViewStyle
+    style?: ViewStyle
 }
 
 export const HeaderLogoComponent = (props: HeaderLogoComponent) => {
