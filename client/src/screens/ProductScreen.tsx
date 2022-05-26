@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { observer } from 'mobx-react-lite';
 
 import { getOneProduct } from '../api/ProductApi';
 
@@ -15,16 +16,22 @@ import { StarsComponent } from '../components/StarsComponent';
 import { Colors } from '../assets/Colors';
 import { Strings } from '../assets/Strings';
 import { RootNativeStackNavigator, RootScreenNamesEnum } from '../navigation/RootNavigator';
+import { basketStore } from '../store/BasketStore';
 import { ProductDetailsType } from '../store/types';
 import { userStore } from '../store/UserStore';
 
 type ProductScreenRouteType = RouteProp<RootNativeStackNavigator, RootScreenNamesEnum.ProductScreen>;
 
-export const ProductScreen = () => {
+const checkProductInBasket = (productId: number) => {
+    return basketStore.products.some((item) => item.id === productId);
+};
+
+export const ProductScreen = observer(() => {
     const route = useRoute<ProductScreenRouteType>();
     const { productId } = route.params;
     const [productDetails, setProductDetails] = useState<ProductDetailsType | null>(null);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const [isInBasket, setIsInBasket] = useState<boolean>(true);
     const uri = process.env.REACT_APP_API_URL+ '/' + productDetails?.img;
 
     const getProductDetails = async () => {
@@ -38,8 +45,19 @@ export const ProductScreen = () => {
         getProductDetails();
     }, [isModalVisible]);
 
+    useEffect(() => {
+        if (productDetails) {
+            const isInBasket = checkProductInBasket(productDetails.id);
+            setIsInBasket(isInBasket);
+        }
+    }, [basketStore.products, productDetails]);
+
     const toggleModal = () => {
         setIsModalVisible(!isModalVisible);
+    };
+
+    const addProductHandler = async (productId: number) => {
+        await basketStore.addProductToBasket(productId);
     };
 
     const renderProductDetails = () => {
@@ -85,9 +103,10 @@ export const ProductScreen = () => {
                                     onPress={toggleModal} />
                             )}
                             <DarkButtonComponent
+                                isDisabled={isInBasket}
                                 style={styles.darkButton}
                                 title={Strings.productScreen.addToBasket}
-                                onPress={() => 0}
+                                onPress={() => addProductHandler(productId)}
                             />
                         </View>
                         <RatingModalComponent
@@ -100,7 +119,7 @@ export const ProductScreen = () => {
             }
         </SafeAreaView>
     );
-};
+});
 
 const styles = StyleSheet.create({
     container:{

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
     FlatList,
     Image,
@@ -11,10 +11,12 @@ import { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import { useNavigation } from '@react-navigation/native';
+import { observer } from 'mobx-react-lite';
 
 import { Colors } from '../assets/Colors';
 import { Strings } from '../assets/Strings';
 import { RootNativeStackNavigator, RootScreenNamesEnum } from '../navigation/RootNavigator';
+import { basketStore } from '../store/BasketStore';
 import { ProductType } from '../store/types';
 
 import { EmptyListComponent } from './EmptyListComponent';
@@ -33,31 +35,42 @@ const NUM_COLUMNS = 2;
 const ICON_NAME = 'plus';
 const ICON_SIZE = 20;
 
-export const ProductListComponent = (props: ProductListComponentPropsType) => {
+export const ProductListComponent = observer((props: ProductListComponentPropsType) => {
     const { data, isLoading, onEndReached, onRefresh } = props;
     const navigation = useNavigation<HomeScreenNavigationProp>();
 
-    const goToProductScreen = (product: ProductType) => {
-        navigation.navigate(RootScreenNamesEnum.ProductScreen, { productId: product.id });
+    const checkProductInBasket = useCallback((productId: number) => {
+        return basketStore.products.some((item) => item.id === productId);
+    }, [ basketStore.products ]);
+
+    const goToProductScreen = (productId: number) => {
+        navigation.navigate(RootScreenNamesEnum.ProductScreen, { productId });
+    };
+
+    const addProductHandler = async (productId: number) => {
+        await basketStore.addProductToBasket(productId);
     };
 
     const renderItem = ({ item }: ListRenderItemInfo<ProductType>) => {
         const uri = process.env.REACT_APP_API_URL+ '/' + item.img;
+        const isInBasket = checkProductInBasket(item.id);
 
         return(
             <TouchableOpacity
                 style={styles.itemContainer}
-                onPress={() => goToProductScreen(item)}
+                onPress={() => goToProductScreen(item.id)}
             >
                 <Image source={{ uri }} style={styles.img}/>
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.price} >{item.price} ₽</Text>
-                <TouchableOpacity
-                    style={styles.plusContainer}
-                    onPress={() => 0}
-                >
-                    <Icon name={ICON_NAME} size={ICON_SIZE} color={Colors.white} />
-                </TouchableOpacity>
+                {!isInBasket && (
+                    <TouchableOpacity
+                        style={styles.plusContainer}
+                        onPress={() => addProductHandler(item.id)}
+                    >
+                        <Icon name={ICON_NAME} size={ICON_SIZE} color={Colors.white} />
+                    </TouchableOpacity>
+                )}
             </TouchableOpacity>
         );
     };
@@ -96,7 +109,7 @@ export const ProductListComponent = (props: ProductListComponentPropsType) => {
             onRefresh={onRefresh}
         />
     );
-};
+});
 
 const styles = StyleSheet.create({
     row: {

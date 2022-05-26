@@ -31,7 +31,9 @@ export const Strings = {
     },
     basketScreen: {
         basket: 'Корзина',
-        empty: 'Тут ничего нет'
+        empty: 'Тут ничего нет',
+        createOrder: 'Оформить заказ',
+        total: 'Игото:'
     },
     userScreen: {
         profile: 'Профиль'
@@ -41,5 +43,13 @@ export const Strings = {
     },
     ratingModal: {
         rateProduct: 'Оценить товар'
+    },
+    orderModal: {
+        confirm: 'Подтвердить',
+        successful: 'Заказ успешно оформлен!',
+        clarificationOfDetails: 'В течение 15 минут с вами свяжется менеджер для уточнения деталей доставки',
+        goodDay: 'Хорошего дня!',
+        numberOfPositions: (count: number) => `Оформить заказ из ${count} позиции(й)`,
+        total: (total: number) => `Общей суммой на ${total} ₽`
     }
 };

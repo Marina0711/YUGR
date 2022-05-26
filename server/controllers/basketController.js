@@ -1,4 +1,4 @@
-const { Order, OrderInfo } = require('../models/index')
+const { Order, OrderInfo, Product } = require('../models/index')
 const ApiError = require('../error/apiError');
 
 class BasketController {
@@ -19,7 +19,7 @@ class BasketController {
 
     async delete(req, res, next) {
         try {
-            const { productId, orderId } = req.body
+            const { productId, orderId } = req.query
             if (!orderId || !productId) {
                 next(ApiError.badRequest(('Неверные параметры')))
             }
@@ -36,10 +36,12 @@ class BasketController {
         try {
             const { orderId, productId, count } = req.body
 
-            const updatedProduct = await OrderInfo.update(
+            await OrderInfo.update(
                 { count },
                 { where: { orderId, productId } }
             )
+
+            const updatedProduct = await OrderInfo.findOne({ where: { orderId, productId } })
 
             return res.json(updatedProduct)
         } catch (e) {
@@ -49,7 +51,7 @@ class BasketController {
 
     async get(req, res, next) {
         try {
-            const { userId } = req.body
+            const { userId } = req.query
 
             const basket = await Order.findOne(
                 {
@@ -58,7 +60,22 @@ class BasketController {
                 }
             )
 
-            return res.json(basket)
+            const orderInfo = basket.dataValues.orderInfo
+
+            const products = []
+
+            if (orderInfo.length > 0) {
+                await Promise.all(orderInfo.map(async i => {
+                    try {
+                        const product = await Product.findOne({ where: { id: i.productId }})
+                        products.push({...product.dataValues, count: i.count})
+                    } catch (e) {
+                        next(ApiError.badRequest((e.message)))
+                    }
+                }))
+            }
+
+            return res.json({id: basket.dataValues.id, products})
         } catch (e) {
             next(ApiError.badRequest((e.message)))
         }

@@ -1,3 +1,4 @@
+import { basketStore } from '../store/BasketStore';
 import { StatusEnum, UserType } from '../store/types';
 import { userStore } from '../store/UserStore';
 
@@ -10,6 +11,8 @@ export const authSubmitHelper = async (authOperation: () => Promise<UserType | v
         const user = await authOperation();
 
         if (user) {
+            await basketStore.fetchBasket(user.id);
+
             userStore.setUser(user);
             userStore.setIsAuth(true);
             userStore.setStatus(StatusEnum.success);
