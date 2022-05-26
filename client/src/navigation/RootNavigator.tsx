@@ -18,7 +18,7 @@ export enum RootScreenNamesEnum {
 
 export type RootNativeStackNavigator = {
     [RootScreenNamesEnum.BottomTabNavigator]: undefined,
-    [RootScreenNamesEnum.ProductScreen]: {product: ProductType},
+    [RootScreenNamesEnum.ProductScreen]: { productId: number },
 }
 
 const Stack = createNativeStackNavigator<RootNativeStackNavigator>();

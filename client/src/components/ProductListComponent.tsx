@@ -25,7 +25,8 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<RootNativeStackNavigat
 type ProductListComponentPropsType = {
     data: ProductType[],
     isLoading: boolean,
-    onEndReached: () => void
+    onEndReached: () => void,
+    onRefresh: () => void
 }
 
 const NUM_COLUMNS = 2;
@@ -33,11 +34,11 @@ const ICON_NAME = 'plus';
 const ICON_SIZE = 20;
 
 export const ProductListComponent = (props: ProductListComponentPropsType) => {
-    const { data, isLoading, onEndReached } = props;
+    const { data, isLoading, onEndReached, onRefresh } = props;
     const navigation = useNavigation<HomeScreenNavigationProp>();
 
     const goToProductScreen = (product: ProductType) => {
-        navigation.navigate(RootScreenNamesEnum.ProductScreen, { product });
+        navigation.navigate(RootScreenNamesEnum.ProductScreen, { productId: product.id });
     };
 
     const renderItem = ({ item }: ListRenderItemInfo<ProductType>) => {
@@ -89,8 +90,10 @@ export const ProductListComponent = (props: ProductListComponentPropsType) => {
             keyExtractor={getKeyExtractor}
             showsVerticalScrollIndicator={false}
             ListFooterComponent={renderListFooterComponent}
+            refreshing={isLoading}
             onEndReached={onEndReached}
             onEndReachedThreshold={0.1}
+            onRefresh={onRefresh}
         />
     );
 };
@@ -108,8 +111,9 @@ const styles = StyleSheet.create({
         marginTop: 150
     },
     img: {
-        width: 150,
-        height: 150,
+        resizeMode: 'cover',
+        flex: 1,
+        aspectRatio: 1,
         borderRadius: 8
     },
     name: {

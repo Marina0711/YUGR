@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     container:{
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 15
+        paddingVertical: 12
     },
     block: {
         flex: 1,
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
         flex: 4,
         textAlign: 'center',
         fontSize: 18,
+        fontWeight: '500',
         color: Colors.verifiedBlack
     },
 });

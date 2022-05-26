@@ -28,3 +28,23 @@ export type ProductType = {
     img: string,
     categoryId: number
 }
+
+export type ProductDetailsType = {
+    id: number,
+    name: string,
+    price: number,
+    img: string,
+    categoryId: number,
+    info: [
+        {
+            id: number,
+            title: string,
+            description: string,
+            productId: number
+        }
+    ],
+    rateInfo: {
+        isRated: boolean,
+        rate: number
+    }
+}
