@@ -29,7 +29,6 @@ export const HomeScreen = observer(() => {
             snapToItem(id);
             setActiveCategoryId(id);
             productStore.fetchProducts(id);
-            productStore.setPage(1);
         }
     };
 

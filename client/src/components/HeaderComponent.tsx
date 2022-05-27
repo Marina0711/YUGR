@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         flex: 4,
         textAlign: 'center',
         fontSize: 18,
-        fontWeight: '500',
+        fontWeight: '600',
         color: Colors.verifiedBlack
     },
 });

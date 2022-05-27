@@ -61,6 +61,7 @@ class ProductStore {
             } else if (products) {
                 this.setProducts(products.rows);
                 this.setCount(products.count);
+                this.setPage(1);
             }
 
             this.setStatus(StatusEnum.success);
