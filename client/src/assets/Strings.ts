@@ -33,7 +33,7 @@ export const Strings = {
         basket: 'Корзина',
         empty: 'Тут ничего нет',
         createOrder: 'Оформить заказ',
-        total: 'Игото:'
+        total: 'Итого:'
     },
     userScreen: {
         profile: 'Профиль'
