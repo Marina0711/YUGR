@@ -30,7 +30,11 @@ class OrderController {
                 }
             )
 
-            const result = await Promise.all(orders.map(async (order) => {
+            const filteredOrders = orders.sort((a, b) => {
+                return (a.id < b.id) ? -1 : ((a.id > b.id) ? 1 : 0);
+            })
+
+            const result = await Promise.all(filteredOrders.map(async (order) => {
                 const { products, total } = await getProducts(order.dataValues.orderInfo, next)
 
                 return {
@@ -39,7 +43,6 @@ class OrderController {
                     products,
                     total
                 }
-
             }))
 
             return res.json(result)

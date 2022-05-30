@@ -56,11 +56,7 @@ class OrderStore {
             const orders  = await getOrders(userId);
 
             if (orders) {
-                const filteredOrders = orders.sort((a: OrderType, b: OrderType) => {
-                    return (a.id < b.id) ? -1 : ((a.id > b.id) ? 1 : 0);
-                });
-
-                this.setOrders(filteredOrders);
+                this.setOrders(orders);
             }
 
             this.setStatus(StatusEnum.success);
