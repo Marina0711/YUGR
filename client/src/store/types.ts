@@ -4,12 +4,17 @@ export enum StatusEnum {
     loading
 }
 
+export enum RoleEnum {
+    admin = 'ADMIN'
+}
+
 export type UserType = {
     id: number,
     firstName: string,
     lastName: string,
     phoneNumber: string,
     email: string,
+    role: string
 }
 
 export type CategoryType = {
@@ -55,6 +60,7 @@ export type AddedProductsType = ProductType & {
 
 export type OrderType = {
     id: number,
-    data: Date,
-    products: AddedProductsType[]
+    date: string,
+    products: AddedProductsType[],
+    total: number
 }

@@ -8,11 +8,13 @@ import { userStore } from './UserStore';
 class BasketStore {
     private _id: number;
     private _products: AddedProductsType[];
+    private _total: number
     private _status: StatusEnum;
 
     constructor() {
         this._id = 0;
         this._products = [];
+        this._total = 0;
         this._status = StatusEnum.loading;
         makeAutoObservable(this);
     }
@@ -29,12 +31,20 @@ class BasketStore {
         this._products = products;
     }
 
+    setTotal(total: number) {
+        this._total = total;
+    }
+
     get id() {
         return this._id;
     }
 
     get products() {
         return this._products;
+    }
+
+    get total() {
+        return this._total;
     }
 
     get status() {
@@ -49,6 +59,7 @@ class BasketStore {
             if (basket) {
                 basketStore.setId(basket.id);
                 basketStore.setProducts(basket.products);
+                basketStore.setTotal(basket.total);
             }
 
             this.setStatus(StatusEnum.success);

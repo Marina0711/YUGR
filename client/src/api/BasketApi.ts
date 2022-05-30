@@ -4,7 +4,8 @@ import { authAxiosConfig } from './index';
 
 type BasketType = {
     id: number,
-    products: AddedProductsType[]
+    products: AddedProductsType[],
+    total: number
 };
 
 export const getBasket = async (userId: number): Promise<BasketType | undefined> => {

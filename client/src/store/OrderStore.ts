@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
-import { create } from '../api/OrderApi';
+import { getCategories } from '../api/CategoryApi';
+import { create, getOrders } from '../api/OrderApi';
 
 import { basketStore } from './BasketStore';
 import { OrderType, StatusEnum } from './types';
@@ -41,6 +42,22 @@ class OrderStore {
             await create(basketId, userId);
 
             await basketStore.fetchBasket(userId);
+            await this.fetchOrders(userId);
+
+            this.setStatus(StatusEnum.success);
+        } catch (e) {
+            this.setStatus(StatusEnum.error);
+        }
+    }
+
+    async fetchOrders(userId: number) {
+        try {
+            this.setStatus(StatusEnum.loading);
+            const orders  = await getOrders(userId);
+
+            if (orders) {
+                this.setOrders(orders);
+            }
 
             this.setStatus(StatusEnum.success);
         } catch (e) {
