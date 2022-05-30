@@ -1,5 +1,6 @@
-const { Order, OrderInfo, Product } = require('../models/index')
+const { Order, OrderInfo } = require('../models/index')
 const ApiError = require('../error/apiError');
+const getProducts = require('../helpers/getProducts')
 
 class BasketController {
     async add(req, res, next) {
@@ -60,22 +61,9 @@ class BasketController {
                 }
             )
 
-            const orderInfo = basket.dataValues.orderInfo
+            const { products, total } = await getProducts(basket.dataValues.orderInfo, next)
 
-            const products = []
-
-            if (orderInfo.length > 0) {
-                await Promise.all(orderInfo.map(async i => {
-                    try {
-                        const product = await Product.findOne({ where: { id: i.productId }})
-                        products.push({...product.dataValues, count: i.count})
-                    } catch (e) {
-                        next(ApiError.badRequest((e.message)))
-                    }
-                }))
-            }
-
-            return res.json({id: basket.dataValues.id, products})
+            return res.json({id: basket.dataValues.id, products, total})
         } catch (e) {
             next(ApiError.badRequest((e.message)))
         }

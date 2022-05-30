@@ -36,7 +36,11 @@ export const Strings = {
         total: 'Итого:'
     },
     userScreen: {
-        profile: 'Профиль'
+        profile: 'Профиль',
+        orderCode: 'Код заказа: ',
+        orderPrice: 'Сумма заказа: ',
+        ordersHistory: 'История заказов',
+        noOrders: 'Вы еще ничего не заказали'
     },
     errors: {
         somethingWentWrong: 'Что-то пошло не так'
@@ -51,5 +55,5 @@ export const Strings = {
         goodDay: 'Хорошего дня!',
         numberOfPositions: (count: number) => `Оформить заказ из ${count} позиции(й)`,
         total: (total: number) => `Общей суммой на ${total} ₽`
-    }
+    },
 };
